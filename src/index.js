@@ -8,30 +8,25 @@ const PORT = process.env.PORT || 10000;
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN || "sevensport123";
 
-// Verificación webhook
 app.get("/webhook", (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
 
   if (mode === "subscribe" && token === VERIFY_TOKEN) {
-    console.log("WEBHOOK_VERIFIED");
     return res.status(200).send(challenge);
   }
 
   return res.sendStatus(403);
 });
 
-// Recibir mensajes
 app.post("/webhook", (req, res) => {
-  console.log("Mensaje recibido:");
-  console.log(JSON.stringify(req.body, null, 2));
-
+  console.log(req.body);
   res.sendStatus(200);
 });
 
 app.get("/", (req, res) => {
-  res.send("Bot funcionando 🚀");
+  res.send("Servidor funcionando 🚀");
 });
 
 app.listen(PORT, () => {
